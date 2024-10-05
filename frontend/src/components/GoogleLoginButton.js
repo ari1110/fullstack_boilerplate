@@ -1,8 +1,9 @@
 import React from 'react';
+import config from '../config';
 
 const GoogleLoginButton = () => {
   const handleGoogleLogin = () => {
-    window.location.href = '/accounts/google/login/';
+    window.location.href = `${config.API_URL}/accounts/google/login/`;
   };
 
   return (

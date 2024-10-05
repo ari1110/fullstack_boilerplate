@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import config from '../../config';
 
 export const checkAuthStatus = createAsyncThunk(
   'auth/checkAuthStatus',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('/accounts/user/', { withCredentials: true });
+      const response = await axios.get(`${config.API_URL}/accounts/user/`, { withCredentials: true });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -17,7 +18,7 @@ export const logout = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
-      await axios.post('/accounts/logout/', {}, { withCredentials: true });
+      await axios.post(`${config.API_URL}/accounts/logout/`, {}, { withCredentials: true });
       return null;
     } catch (error) {
       return rejectWithValue(error.response.data);
