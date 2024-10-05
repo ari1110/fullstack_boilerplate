@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { checkAuthStatus, logout } from './features/auth/authSlice';
 import Login from './pages/Login';
 import Map from './components/Map';
+import About from './pages/About';
 import './App.css';
 
 function App() {
@@ -29,11 +30,15 @@ function App() {
           <h1 className="text-3xl font-bold underline">
             Fullstack App Boilerplate
           </h1>
+          <nav className="mt-4">
+            <Link to="/" className="mr-4 text-blue-500 hover:text-blue-700">Home</Link>
+            <Link to="/about" className="mr-4 text-blue-500 hover:text-blue-700">About</Link>
+          </nav>
           {isAuthenticated ? (
             <>
               <p>Welcome, {user.username || user.email}!</p>
               <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2"
                 onClick={handleLogout}
               >
                 Logout
@@ -43,10 +48,13 @@ function App() {
             <Navigate to="/login" replace />
           )}
         </header>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={isAuthenticated ? <Map /> : <Navigate to="/login" replace />} />
-        </Routes>
+        <main className="mt-8">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={isAuthenticated ? <Map /> : <Navigate to="/login" replace />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </main>
       </div>
     </Router>
   );
