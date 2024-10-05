@@ -1,6 +1,6 @@
 # Fullstack App Boilerplate
 
-This is a boilerplate for a fullstack application using React, Redux, Django, and GraphQL.
+This is a boilerplate for a fullstack application using React, Redux, Django, and GraphQL, with Google Authentication.
 
 ## Quick Start
 
@@ -15,13 +15,15 @@ For an even more detailed, beginner-friendly guide, check out our [Super Detaile
 3. Update the `.env` files with your specific settings
 4. Run `docker-compose up --build`
 5. Apply database migrations: `docker-compose exec backend python manage.py migrate`
-6. Access the application at `http://localhost:3000`
+6. Set up Google OAuth (see [Setup Guide](SETUP.md) for details)
+7. Access the application at `http://localhost:3000`
 
 ### Manual Setup
 
 1. Clone the repository
 2. Set up and configure the backend and frontend (see [Setup Guide](SETUP.md) for details)
-3. Start the development servers:
+3. Set up Google OAuth (see [Setup Guide](SETUP.md) for details)
+4. Start the development servers:
    - Backend: `python manage.py runserver`
    - Frontend: `npm start`
 
@@ -32,6 +34,7 @@ Once you have set up the project, refer to our [Development Guide](DEVELOPMENT_G
 - Where to start your development work
 - The purpose of key folders and files
 - Best practices for developing with this boilerplate
+- Working with Google Authentication
 
 This guide will help you get started with building your application using this fullstack boilerplate.
 
@@ -55,7 +58,8 @@ fullstack_boilerplate/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── Header.js
-│   │   │   └── Footer.js
+│   │   │   ├── Footer.js
+│   │   │   └── GoogleLoginButton.js
 │   │   ├── pages/
 │   │   │   ├── Home.js
 │   │   │   └── About.js
@@ -92,17 +96,10 @@ fullstack_boilerplate/
 - Django with Django Channels for real-time communication
 - Playwright for web scraping (with Celery for background tasks)
 - GraphQL (Graphene-Django) for API
-- Django AllAuth for authentication
+- Django AllAuth for authentication (including Google OAuth)
 
 ### Database
 - PostgreSQL with PostGIS extension for geospatial data support
-  - Docker image: postgis/postgis:13-3.1
-  - Default configuration (customizable via .env file):
-    - Name: postgres
-    - User: postgres
-    - Password: postgres
-    - Host: db
-    - Port: 5432
 
 ### Caching and Message Broker
 - Redis for caching and real-time communication
@@ -117,25 +114,6 @@ fullstack_boilerplate/
 ## Deployment
 
 For detailed deployment instructions, please refer to our [Deployment Guide](DEPLOYMENT.md).
-
-Here's a brief overview of deployment options:
-
-- Frontend: 
-  - Can be deployed to static hosting services like Vercel, Netlify, or AWS S3 + CloudFront
-  - Requires updating environment variables to point to the production backend URL
-
-- Backend: 
-  - Can be deployed to cloud platforms like Heroku, AWS EC2, or DigitalOcean
-  - Requires setting up a production-ready PostgreSQL database with PostGIS
-  - Needs a Redis instance for caching and real-time features
-
-- Database: 
-  - For production, it's recommended to use a managed PostgreSQL service with PostGIS support, such as AWS RDS for PostgreSQL
-
-- Redis: 
-  - Can use managed Redis services like Redis Cloud or AWS ElastiCache
-
-Remember to set up proper security measures, including SSL certificates, secure environment variables, and appropriate firewall rules.
 
 ## Contributing
 

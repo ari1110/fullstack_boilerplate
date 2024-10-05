@@ -1,29 +1,54 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { increment } from './features/counter/counterSlice';
+import { checkAuthStatus, logout } from './features/auth/authSlice';
+import Login from './pages/Login';
 import Map from './components/Map';
 import './App.css';
 
 function App() {
-  const count = useSelector((state) => state.counter.value);
+  const { isAuthenticated, user, loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(checkAuthStatus());
+  }, [dispatch]);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1 className="text-3xl font-bold underline">
-          Fullstack App Boilerplate
-        </h1>
-        <p>Count: {count}</p>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => dispatch(increment())}
-        >
-          Increment
-        </button>
-        <Map />
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <header className="App-header">
+          <h1 className="text-3xl font-bold underline">
+            Fullstack App Boilerplate
+          </h1>
+          {isAuthenticated ? (
+            <>
+              <p>Welcome, {user.username || user.email}!</p>
+              <button
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Navigate to="/login" replace />
+          )}
+        </header>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={isAuthenticated ? <Map /> : <Navigate to="/login" replace />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

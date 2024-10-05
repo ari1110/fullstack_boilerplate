@@ -1,12 +1,13 @@
 # Super Detailed Setup Guide
 
-This guide will walk you through setting up the fullstack application, explaining each step in simple terms. We'll focus on the Docker setup as it's easier for beginners.
+This guide will walk you through setting up the fullstack application, including Google Authentication, explaining each step in simple terms. We'll focus on the Docker setup as it's easier for beginners.
 
 ## What You Need Before Starting
 
 1. A computer with Windows, Mac, or Linux
 2. Internet connection
-3. About 30 minutes of free time
+3. A Google account
+4. About 45 minutes of free time
 
 ## Step 1: Install Required Software
 
@@ -78,6 +79,7 @@ Docker helps you run the application without installing lots of other stuff.
    - Find the line that says `REACT_APP_MAPBOX_ACCESS_TOKEN=your-mapbox-access-token`
    - If you have a Mapbox account, replace `your-mapbox-access-token` with your actual token
    - If you don't have a Mapbox account, you can leave it as is for now
+   - We'll add the Google Client ID later
    - Save the file and close it
 
 ## Step 4: Start the Application
@@ -113,11 +115,63 @@ Docker helps you run the application without installing lots of other stuff.
 3. It will ask for an email address. You can just press Enter to skip this.
 4. It will ask for a password. Type a password and press Enter. Then type it again when it asks.
 
-## Step 7: See Your Application!
+## Step 7: Set Up Google Authentication
+
+1. Go to the Google Cloud Console (https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. In the sidebar, click on "APIs & Services" > "Credentials"
+4. Click the "Create Credentials" button and select "OAuth client ID"
+5. Choose "Web application" as the application type
+6. Set the name to something like "My Fullstack App"
+7. Under "Authorized JavaScript origins", add:
+   ```
+   http://localhost:3000
+   ```
+8. Under "Authorized redirect URIs", add:
+   ```
+   http://localhost:8000/accounts/google/login/callback/
+   ```
+9. Click "Create"
+10. You'll see a popup with your Client ID and Client Secret. Keep this window open, we'll need these soon.
+
+11. Go back to your Terminal or Command Prompt
+12. Type this command and press Enter:
+    ```
+    notepad frontend\.env
+    ```
+    (If you're on Mac, use `open -e frontend/.env` instead)
+
+13. Add this line to the file, replacing `your-google-client-id` with the Client ID from step 10:
+    ```
+    REACT_APP_GOOGLE_CLIENT_ID=your-google-client-id
+    ```
+14. Save and close the file
+
+15. Now, let's set up the backend. In your web browser, go to:
+    ```
+    http://localhost:8000/admin
+    ```
+16. Log in with the superuser account you created in Step 6
+17. In the admin panel, find "Sites" and click on it
+18. Click on the existing site (probably named "example.com")
+19. Change the "Domain name" to `localhost:8000`
+20. Change the "Display name" to `My Fullstack App`
+21. Click "Save"
+
+22. Go back to the admin home page
+23. Find "Social applications" and click on it
+24. Click "Add social application" in the top right
+25. Set the provider to "Google"
+26. Set the name to "Google Login"
+27. Enter the Client ID and Secret Key from step 10
+28. In the "Sites" box, move "localhost:8000" to the "Chosen sites" box
+29. Click "Save"
+
+## Step 8: See Your Application!
 
 1. Open your web browser (like Chrome, Firefox, or Safari)
 2. In the address bar at the top, type `http://localhost:3000` and press Enter
-3. You should see your application's frontend!
+3. You should see your application's frontend with a "Login with Google" button!
 4. To see the admin panel, go to `http://localhost:8000/admin` and log in with the username and password you created in Step 6
 
 ## About the Database
@@ -140,4 +194,4 @@ When you're done:
 4. Wait for everything to start
 5. Go to `http://localhost:3000` in your web browser
 
-Congratulations! You've set up and run your fullstack application!
+Congratulations! You've set up and run your fullstack application with Google Authentication!
