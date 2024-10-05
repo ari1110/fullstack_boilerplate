@@ -25,18 +25,44 @@ For an even more detailed, beginner-friendly guide, check out our [Super Detaile
    - Backend: `python manage.py runserver`
    - Frontend: `npm start`
 
+## Development Guide
+
+Once you have set up the project, refer to our [Development Guide](DEVELOPMENT_GUIDE.md) for instructions on:
+- Understanding the project structure
+- Where to start your development work
+- The purpose of key folders and files
+- Best practices for developing with this boilerplate
+
+This guide will help you get started with building your application using this fullstack boilerplate.
+
 ## Project Structure
 
 ```
 fullstack_boilerplate/
 ├── backend/
 │   ├── fullstack_project/
+│   │   ├── settings.py
+│   │   └── urls.py
 │   ├── main_app/
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── schema.py
+│   │   └── urls.py
 │   ├── .env.example
 │   ├── manage.py
 │   └── requirements.txt
 ├── frontend/
 │   ├── src/
+│   │   ├── components/
+│   │   │   ├── Header.js
+│   │   │   └── Footer.js
+│   │   ├── pages/
+│   │   │   ├── Home.js
+│   │   │   └── About.js
+│   │   ├── features/
+│   │   │   └── auth/
+│   │   │       └── authSlice.js
+│   │   └── App.js
 │   ├── .env.example
 │   ├── package.json
 │   └── tailwind.config.js
@@ -49,6 +75,7 @@ fullstack_boilerplate/
 ├── README.md
 ├── SETUP.md
 ├── DETAILED_SETUP.md
+├── DEVELOPMENT_GUIDE.md
 └── DEPLOYMENT.md
 ```
 
